@@ -1,0 +1,9 @@
+name    -uname
+email   -mail
+password - pword
+gender  - gender
+type    -utype
+age     -age
+blood_group -bgroup
+address=address
+mobile= mobile

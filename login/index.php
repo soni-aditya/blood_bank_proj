@@ -19,8 +19,12 @@
                 input.value = data[name];
                 form.appendChild(input);
             }
+//            console.log(form);
             form.submit();
         }
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').focus()
+        })
     </script>
 </head>
 <body class="home_body">
@@ -63,7 +67,7 @@
                         </span>
                     </label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" name="mail" id="inputEmail3" placeholder="Max 30 characters" maxlength="30">
+                        <input type="text" class="form-control" name="mail" id="inputEmail1" placeholder="Max 30 characters" maxlength="30">
                     </div>
                 </div>
 
@@ -75,7 +79,7 @@
                         </span>
                     </label>
                     <div class="col-sm-9">
-                        <input type="password" class="form-control" name="pword" id="inputEmail3" placeholder="Max 30 characters" maxlength="30">
+                        <input type="password" class="form-control" name="pword" id="inputEmail2" placeholder="Max 30 characters" maxlength="30">
                     </div>
                 </div>
                 <br>
@@ -94,6 +98,34 @@
         All Rights Rserved by Copyright-XXXX @ 2018
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<button type="button" class="btn btn-primary" id="modalButton" hidden="hidden" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+</button>
+<!-- Modal -->
+<div class="modal fade mymodal" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLongTitle">An error occured</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Eighter Username or Password is wrong.<br>
+                Please enter correct login credentials.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 
@@ -104,20 +136,31 @@ if(isset($_POST['sub'])){
     $email      =$_POST['mail'];
     $password   =md5($_POST['pword']);
     //Inserting information
-    $insert_result=Login_Db_Operation::getData($email,$password);
-    if($insert_result == 1){
-        echo "error";
+    $login_result=Login_Db_Operation::getData($email,$password);
+    if($login_result == 1){
+        echo "<script>$('#modalButton').click();</script>";
     }
-    else if($insert_result == 2){
-        echo 'error';
+    else if($login_result == 2){
+        echo "<script>$('#modalButton').click();</script>";
     }
     else{
+        $data="{user_id :   ".$login_result['id'].",
+                type_id :   ".$login_result['type_id'].",   
+                name    :   '".$login_result['uname']."',
+                email   :   '".$login_result['email']."',
+                age     :   ".$login_result['age'].",
+                gender  :   '".$login_result['gender']."',
+                mobile  :   ".$login_result['mobile'].",
+                address :   '".$login_result['address']."',
+                bg_id   :   ".$login_result['blood_group_id']."
+                }";
+
 //        echo "<script type='text/javascript'>  window.location='../'; </script>";
-        if($insert_result['type_id'] == 1){
-            echo "<script type='text/javascript'> redirectPost('../hospital_logged_in', 'post',{ user_id: '".$insert_result['id']."' }); </script>";
+        if($login_result['type_id'] == 1){
+            echo "<script type='text/javascript'> redirectPost('../hospital_logged_in/index.php', 'post',".$data."); </script>";
         }
         else{
-            echo "<script type='text/javascript'> redirectPost('../reciever_logged_in', 'post',{ user_id: '".$insert_result['id']."' }); </script>";
+            echo "<script type='text/javascript'> redirectPost('../reciever_logged_in/index.php', 'post',".$data."); </script>";
         }
     }
 }

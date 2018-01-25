@@ -63,6 +63,7 @@
                     </label>
                     <div class="col-sm-9">
                         <input type="email" name="mail" class="form-control" id="inputPassword3" required="required" placeholder="@example.com" maxlength="30">
+                        <small id="emailHelp" class="form-text text-danger">We'll never share your email with anyone else.</small>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -146,6 +147,7 @@
                 <div class="form-group">
                     <label for="comment">Address</label>
                     <textarea class="form-control" name="address" rows="5" id="comment"></textarea>
+                    <small id="emailHelp" class="form-text text-danger">We'll never share your Address with anyone else.</small>
                 </div>
 
                 <div class="form-group row">
@@ -157,6 +159,7 @@
                     </label>
                     <div class="col-10">
                         <input class="form-control" name="mobile" type="number" placeholder="+91-" maxlength="10" minlength="10" id="example-number-input" required="required">
+                        <small id="emailHelp" class="form-text text-danger">We'll never share your contact with anyone else.</small>
                     </div>
                 </div>
                 <br>
